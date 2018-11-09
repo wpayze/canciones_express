@@ -23,3 +23,23 @@ exports.agregarSong = function (req, res, next) {
       res.send('Cancion creada.');
     });
   }
+
+  exports.getForm = function(req,res,next){
+
+    res.render('agregar');
+
+  }
+
+  exports.mayorQue = function (req,res,next) {
+
+    Cancion.find({ year: { $not: { $gt: req.params.year } } }, function(err, canciones){
+      if (err) res.send(err);
+      if (!canciones){
+        res.send('No existen canciones con año mayor a ' + req.params.year);
+      }else{
+        res.render('canciones', {canciones: canciones});
+      }
+      
+   });
+
+  }
